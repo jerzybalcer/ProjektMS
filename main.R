@@ -3,21 +3,22 @@
 # Created by: Jan Staniszewski, Jerzy Balcer, Konrad Krawczyk, Daniel Karnacz, Marcin Rak
 # Created on: 13.03.2021
 
-#install.packages("psych")
+# Konieczne jest doinstalowanie ponizszych bibliotek
 library("psych")
 library("moments")
 library("ineq")
 
-# sciezka janek
+# Sciezka Janek
 #dane <- read.csv("C:/Users/wyga/IdeaProjects/Projekt MS/Exasens.csv", sep=",", header = TRUE) #Pobieranie danych z pliku CSV do programy
 
-# sciezka jerzy
+# Sciezka jerzy
 dane <- read.csv("C:/Users/Jerzy/PycharmProjects/ProjektMS/ProjektMS/Exasens.csv", sep=",", header = TRUE) #Pobieranie danych z pliku CSV do programy
 
-# wczytanie danych do ramki
+# Wczytanie danych do ramki
 dane_grupy <- split(dane, dane$Diagnosis)
 
-# ZAD 1
+# ZAD 1 - w raporcie
+# ZAD 2
 
 wartosci <- c(Asthma = summary(dane_grupy$Asthma$Age), COPD = summary(dane_grupy$COPD$Age), HC = summary(dane_grupy$HC$Age), Infected = summary(dane_grupy$Infected$Age))
 
@@ -50,4 +51,14 @@ trzeci_moment_centralny <- c(Asthma = moment(dane_grupy$Asthma$Age, 3, TRUE), CO
 kurtoza <- c(Asthma = kurtosis(dane_grupy$Asthma$Age), COPD = kurtosis(dane_grupy$COPD$Age), HC = kurtosis(dane_grupy$HC$Age), Infected = kurtosis(dane_grupy$Infected$Age))
 eksces <- c(Asthma = kurtosis(dane_grupy$Asthma$Age)-3, COPD = kurtosis(dane_grupy$COPD$Age)-3, HC = kurtosis(dane_grupy$HC$Age)-3, Infected = kurtosis(dane_grupy$Infected$Age)-3)
 #wspolczynnikLorentza <- c(Asthma = Lc(dane_grupy$Asthma$Age), COPD = Lc(dane_grupy$COPD$Age), HC = Lc(dane_grupy$HC$Age), Infected = Lc(dane_grupy$Infected$Age))
-# nie wiemy jak to zrobic
+# ! ! ! ! - nie wiemy jak zrobic
+
+# Histogram
+histAsthma <- hist(dane_grupy$Asthma$Age, probability = F, main = "Histogram dla grupy Asthma", xlab = "Grupa Wiekowa", ylab = "Liczebnosc", xlim=range(0,100) ,ylim = range(0,20) )
+histCOPD <- hist(dane_grupy$COPD$Age, probability = F, main = "Histogram dla grupy COPD", xlab = "Grupa Wiekowa", ylab = "Liczebnosc", xlim=range(0,100) ,ylim = range(0,20) )
+histHC <- hist(dane_grupy$HC$Age, probability = F, main = "Histogram dla grupy HC", xlab = "Grupa Wiekowa", ylab = "Liczebnosc", xlim=range(0,100) ,ylim = range(0,20) )
+histInfected <- hist(dane_grupy$Infected$Age, probability = F, main = "Histogram dla grupy Infected", xlab = "Grupa Wiekowa", ylab = "Liczebnosc", xlim=range(0,100) ,ylim = range(0,20) )
+
+boxplot(dane_grupy$Asthma$Age, dane_grupy$COPD$Age,dane_grupy$HC$Age,dane_grupy$Infected$Age, ylab = "Wiek", xlab = "Grupa", main = "Rozkład danych na wykresie pudełkowym", names = c("Asthma", "COPD", "HC", "Infected"))
+
+# ZAD 3
