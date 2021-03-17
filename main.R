@@ -5,6 +5,8 @@
 
 #install.packages("psych")
 library("psych")
+library("moments")
+library("ineq")
 
 # sciezka janek
 #dane <- read.csv("C:/Users/wyga/IdeaProjects/Projekt MS/Exasens.csv", sep=",", header = TRUE) #Pobieranie danych z pliku CSV do programy
@@ -31,7 +33,6 @@ obliczModalna <- function(vector) { wartosc <- unique(vector)
                                     wartosc[which.max(tabulate(match(vector, wartosc)))] }
 moda <- c(Asthma = obliczModalna(dane_grupy$Asthma$Age), COPD = obliczModalna(dane_grupy$COPD$Age), HC = obliczModalna(dane_grupy$HC$Age), Infected = obliczModalna(dane_grupy$Infected$Age))
 
-
 # Miary Zroznicowania
 rozstepy_cwiartkowe <- c(Asthma = IQR(dane_grupy$Asthma$Age), COPD = IQR(dane_grupy$COPD$Age), HC = IQR(dane_grupy$HC$Age), Infected = IQR(dane_grupy$Infected$Age))
 rozstepy <- c(Asthma = max(dane_grupy$Asthma$Age) - min(dane_grupy$Asthma$Age), COPD = max(dane_grupy$COPD$Age) - min(dane_grupy$COPD$Age), HC = max(dane_grupy$HC$Age) - min(dane_grupy$HC$Age), Infected = max(dane_grupy$Infected$Age) - min(dane_grupy$Infected$Age))
@@ -42,4 +43,11 @@ zmiennosc <- c(Asthma = sd(dane_grupy$Asthma$Age)/mean(dane_grupy$Asthma$Age), C
 odch_cwiartkowe <- c(Asthma = rozstepy_cwiartkowe["Asthma"]/2 , COPD = rozstepy_cwiartkowe["COPD"]/2, HC = rozstepy_cwiartkowe["HC"]/2, Infected = rozstepy_cwiartkowe["Infected"]/2)
 
 # Miary Asymetrii
+wspolczynnik_asymetrii <- c(Asthma = skew(dane_grupy$Asthma$Age), COPD = skew(dane_grupy$COPD$Age), HC = skew(dane_grupy$HC$Age), Infected = skew(dane_grupy$Infected$Age))
+trzeci_moment_centralny <- c(Asthma = moment(dane_grupy$Asthma$Age, 3, TRUE), COPD = moment(dane_grupy$COPD$Age, 3, TRUE), HC = moment(dane_grupy$HC$Age, 3, TRUE), Infected = moment(dane_grupy$Infected$Age, 3, TRUE))
 
+# Miary Koncentracji
+kurtoza <- c(Asthma = kurtosis(dane_grupy$Asthma$Age), COPD = kurtosis(dane_grupy$COPD$Age), HC = kurtosis(dane_grupy$HC$Age), Infected = kurtosis(dane_grupy$Infected$Age))
+eksces <- c(Asthma = kurtosis(dane_grupy$Asthma$Age)-3, COPD = kurtosis(dane_grupy$COPD$Age)-3, HC = kurtosis(dane_grupy$HC$Age)-3, Infected = kurtosis(dane_grupy$Infected$Age)-3)
+#wspolczynnikLorentza <- c(Asthma = Lc(dane_grupy$Asthma$Age), COPD = Lc(dane_grupy$COPD$Age), HC = Lc(dane_grupy$HC$Age), Infected = Lc(dane_grupy$Infected$Age))
+# nie wiemy jak to zrobic
