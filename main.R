@@ -53,3 +53,23 @@ histInfected <- hist(dane_grupy$Infected$Age, probability = F, main = "Histogram
 boxplot(dane_grupy$Asthma$Age, dane_grupy$COPD$Age,dane_grupy$HC$Age,dane_grupy$Infected$Age, ylab = "Wiek", xlab = "Grupa", main = "Rozkład danych na wykresie pudełkowym", names = c("Asthma", "COPD", "HC", "Infected"))
 
 # ZAD 3
+
+# Asthma
+length_bez_na_asthma <- length(dane_grupy$Asthma$Real.part.Average[!is.na(dane_grupy$Asthma$Real.part.Average)])
+wart_statystyki_testowej_asthma <- ((mean(dane_grupy$Asthma$Real.part.Average, na.rm = "true")-(-470))/(sd(dane_grupy$Asthma$Real.part.Average, na.rm = "true")/sqrt(length_bez_na_asthma)))
+kwantyl_rozkladu_asthma <- qnorm(0.975)
+wynik_testu_asthma <- "brak podstaw do odrzucenia hipotezy"
+
+if(wart_statystyki_testowej_asthma<(0-kwantyl_rozkladu_asthma) || wart_statystyki_testowej_asthma>kwantyl_rozkladu_asthma)
+  wynik_testu_asthma = "hipoteza odrzucona"
+
+# Infected
+length_bez_na_infected <- length(dane_grupy$Infected$Real.part.Average[!is.na(dane_grupy$Infected$Real.part.Average)])
+wart_statystyki_testowej_infected <- ((mean(dane_grupy$Infected$Real.part.Average, na.rm = "true")-(-470))/(sd(dane_grupy$Infected$Real.part.Average, na.rm = "true")/sqrt(length_bez_na_infected)))
+kwantyl_rozkladu_infected <- qnorm(0.975)
+wynik_testu_infected <- "brak podstaw do odrzucenia hipotezy"
+
+if(wart_statystyki_testowej_infected<(0-kwantyl_rozkladu_infected) || wart_statystyki_testowej_infected>kwantyl_rozkladu_infected)
+  wynik_testu_infected = "hipoteza odrzucona"
+
+
