@@ -58,18 +58,53 @@ boxplot(dane_grupy$Asthma$Age, dane_grupy$COPD$Age,dane_grupy$HC$Age,dane_grupy$
 length_bez_na_asthma <- length(dane_grupy$Asthma$Real.part.Average[!is.na(dane_grupy$Asthma$Real.part.Average)])
 wart_statystyki_testowej_asthma <- ((mean(dane_grupy$Asthma$Real.part.Average, na.rm = "true")-(-470))/(sd(dane_grupy$Asthma$Real.part.Average, na.rm = "true")/sqrt(length_bez_na_asthma)))
 kwantyl_rozkladu_asthma <- qnorm(0.975)
-wynik_testu_asthma <- "brak podstaw do odrzucenia hipotezy"
+wynik_testu_asthma_zad3 <- "przecietna wartosc moze byc rowna -470 na danym poziomie istotnosci"
 
 if(wart_statystyki_testowej_asthma<(0-kwantyl_rozkladu_asthma) || wart_statystyki_testowej_asthma>kwantyl_rozkladu_asthma)
-  wynik_testu_asthma = "hipoteza odrzucona"
+  wynik_testu_asthma_zad3 = "przecietna wartosc jest rozna od -470"
 
 # Infected
 length_bez_na_infected <- length(dane_grupy$Infected$Real.part.Average[!is.na(dane_grupy$Infected$Real.part.Average)])
 wart_statystyki_testowej_infected <- ((mean(dane_grupy$Infected$Real.part.Average, na.rm = "true")-(-470))/(sd(dane_grupy$Infected$Real.part.Average, na.rm = "true")/sqrt(length_bez_na_infected)))
 kwantyl_rozkladu_infected <- qnorm(0.975)
-wynik_testu_infected <- "brak podstaw do odrzucenia hipotezy"
+wynik_testu_infected_zad3 <- "przecietna wartosc moze byc rowna -470 na danym poziomie istotnosci"
 
 if(wart_statystyki_testowej_infected<(0-kwantyl_rozkladu_infected) || wart_statystyki_testowej_infected>kwantyl_rozkladu_infected)
-  wynik_testu_infected = "hipoteza odrzucona"
+  wynik_testu_infected_zad3 = "przecietna wartosc jest rozna od -470"
+
+# ZAD 4
+
+# a)
+
+# Zakomentowane aby nie losowac nowych probek za kazdym razem
+# zbiorDanychAsthma <- sample(dane_grupy$Asthma$Age,20)
+# zbiorDanychCOPD <- sample(dane_grupy$Asthma$Age,20)
+# zbiorDanychHC <- sample(dane_grupy$Asthma$Age,20)
+# zbiorDanychInfected <- sample(dane_grupy$Asthma$Age,20)
+
+# Wynik jednego z losowan
+zbiorDanychAsthma <- c(75, 64 ,53 ,55, 78, 76, 61, 66 ,50 ,21 ,21 ,58, 63 ,43, 49 ,73 ,57 ,79, 20 ,33)
+zbiorDanychCOPD <- c(68, 49, 81 ,35 ,61, 28, 76, 64, 17, 49, 29, 57, 61, 53, 63, 76, 65, 53, 63, 22)
+zbiorDanychHC <- c(57, 48, 49, 51, 66, 57, 38, 43, 67, 49, 20, 65, 22, 53 ,76, 58, 63, 51, 80, 61)
+zbiorDanychInfected <- c(53, 64, 63, 80, 88, 53, 52, 60, 67, 51, 65, 80, 51, 55, 73, 19, 37, 49, 40, 66)
+
+testAsthma <- shapiro.test(zbiorDanychAsthma)$p.value
+testCOPD <- shapiro.test(zbiorDanychCOPD)$p.value
+testHC <- shapiro.test(zbiorDanychHC)$p.value
+testInfected <- shapiro.test(zbiorDanychInfected)$p.value
+
+wynik_testAsthma_zad4a <- "wiek w danej probie ma rozklad normalny"
+wynik_testCOPD_zad4a <- "wiek w danej probie ma rozklad normalny"
+wynik_testHC_zad4a <- "wiek w danej probie ma rozklad normalny"
+wynik_testInfected_zad4a <- "wiek w danej probie ma rozklad normalny"
+
+if(testAsthma<=0.05) wynik_testAsthma_zad4a = "rozklad wieku nie jest rozkladem normalnym"
+if(testCOPD<=0.05) wynik_testAsthma_zad4a = "rozklad wieku nie jest rozkladem normalnym"
+if(testHC<=0.05) wynik_testHC_zad4a = "rozklad wieku nie jest rozkladem normalnym"
+if(testInfected<=0.05) wynik_testInfected_zad4a = "rozklad wieku nie jest rozkladem normalnym"
+
+# b)
+
+
 
 
