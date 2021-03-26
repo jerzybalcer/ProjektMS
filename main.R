@@ -139,6 +139,21 @@ if(testInfected_chi<(przedzial1) || testInfected_chi>przedzial2)
 
 # ZAD 5
 
+tabelaPlec <- split(dane, dane$Gender)
+# Losowanie 25 probek dla kazdej plci
+# probkiK <- sample(tabelaPlec$`0`$Age, size=25)
+# probkiM <- sample(tabelaPlec$`1`$Age, size=25)
+
+# Raz wylosowane probki, zapisane ponizej
+probkiK <- c(51 ,58 ,49 ,37 ,56 ,53 ,31, 39, 40, 25 ,53 ,51 ,22 ,48, 24, 76, 52, 17, 65, 40, 27, 72, 51, 56, 28)
+probkiM <- c(53, 80, 34, 69, 75, 66, 85, 57, 72, 47, 22, 28, 62, 68, 81, 46, 61, 29, 77, 36, 64, 29, 67, 81, 74)
+
+kobietyVsMezczyzni <- t.test(probkiK, probkiM, alternative = "less", conf.level = 0.01)
+
+wynikTestukobietyVsMezczyzni <- "Srednia wieku kobiet jest mniejsza niz mezczyzn dla danego poziomu istotnosci"
+
+if(kobietyVsMezczyzni$p.value < 0.01)
+    wynikTestukobietyVsMezczyzni <- "Srednia wieku kobiet nie jest mniejsza niz mezczyzn dla danego poziomu istotnosci"
 
 
 
