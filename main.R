@@ -7,6 +7,7 @@
 library("psych")
 library("moments")
 library("ineq")
+library("nortest")
 
 # Sciezka Janek
 #dane <- read.csv("C:/Users/wyga/IdeaProjects/Projekt MS/Exasens.csv", sep=",", header = TRUE) #Pobieranie danych z pliku CSV do programy
@@ -104,6 +105,39 @@ if(testHC<=0.05) wynik_testHC_zad4a = "rozklad wieku nie jest rozkladem normalny
 if(testInfected<=0.05) wynik_testInfected_zad4a = "rozklad wieku nie jest rozkladem normalnym"
 
 # b)
+hipotetycznyWiek <- 18
+
+wariancjaProbkiAthma <- var(zbiorDanychAsthma)
+wariancjaProbkiCOPD <- var(zbiorDanychCOPD)
+wariancjaProbkiHC <- var(zbiorDanychHC)
+wariancjaProbkiInfected <- var(zbiorDanychInfected)
+
+testAsthma_chi <- length(zbiorDanychAsthma)*wariancjaProbkiAthma/hipotetycznyWiek^2
+testCOPD_chi <- length(zbiorDanychCOPD)*wariancjaProbkiCOPD/hipotetycznyWiek^2
+testHC_chi <- length(zbiorDanychHC)*wariancjaProbkiHC/hipotetycznyWiek^2
+testInfected_chi <- length(zbiorDanychInfected)*wariancjaProbkiInfected/hipotetycznyWiek^2
+
+przedzial1 <- qchisq(0.025, 19)
+przedzial2 <- qchisq(0.975, 19)
+
+wynik_testu_chi_Asthma <- "odchylenie standardowe rozne od 18 dla danego poziomu istotnosci"
+wynik_testu_chi_COPD <- "odchylenie standardowe rozne od 18 dla danego poziomu istotnosci"
+wynik_testu_chi_HC <- "odchylenie standardowe rozne od 18 dla danego poziomu istotnosci"
+wynik_testu_chi_Infected <- "odchylenie standardowe rozne od 18 dla danego poziomu istotnosci"
+
+if(testAsthma_chi<(przedzial1) || testAsthma_chi>przedzial2)
+  wynik_testu_chi_Asthma = "odchylenie standardowe rowne 18 na danym poziomie istotnosci"
+
+if(testCOPD_chi<(przedzial1) || testCOPD_chi>przedzial2)
+  wynik_testu_chi_COPD = "odchylenie standardowe rowne 18 na danym poziomie istotnosci"
+
+if(testHC_chi<(przedzial1) || testHC_chi>przedzial2)
+  wynik_testu_chi_HC = "odchylenie standardowe rowne 18 na danym poziomie istotnosci"
+
+if(testInfected_chi<(przedzial1) || testInfected_chi>przedzial2)
+  wynik_testu_chi_Infected = "odchylenie standardowe rowne 18 na danym poziomie istotnosci"
+
+# ZAD 5
 
 
 
