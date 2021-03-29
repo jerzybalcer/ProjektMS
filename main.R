@@ -89,20 +89,22 @@ zbiorDanychCOPD <- c(68, 49, 81 ,35 ,61, 28, 76, 64, 17, 49, 29, 57, 61, 53, 63,
 zbiorDanychHC <- c(57, 48, 49, 51, 66, 57, 38, 43, 67, 49, 20, 65, 22, 53 ,76, 58, 63, 51, 80, 61)
 zbiorDanychInfected <- c(53, 64, 63, 80, 88, 53, 52, 60, 67, 51, 65, 80, 51, 55, 73, 19, 37, 49, 40, 66)
 
-testAsthma <- shapiro.test(zbiorDanychAsthma)$p.value
-testCOPD <- shapiro.test(zbiorDanychCOPD)$p.value
-testHC <- shapiro.test(zbiorDanychHC)$p.value
-testInfected <- shapiro.test(zbiorDanychInfected)$p.value
+testAsthma <- shapiro.test(zbiorDanychAsthma)$statistic
+testCOPD <- shapiro.test(zbiorDanychCOPD)$statistic
+testHC <- shapiro.test(zbiorDanychHC)$statistic
+testInfected <- shapiro.test(zbiorDanychInfected)$statistic
 
 wynik_testAsthma_zad4a <- "wiek w danej probie ma rozklad normalny"
 wynik_testCOPD_zad4a <- "wiek w danej probie ma rozklad normalny"
 wynik_testHC_zad4a <- "wiek w danej probie ma rozklad normalny"
 wynik_testInfected_zad4a <- "wiek w danej probie ma rozklad normalny"
 
-if(testAsthma<=0.05) wynik_testAsthma_zad4a = "rozklad wieku nie jest rozkladem normalnym"
-if(testCOPD<=0.05) wynik_testAsthma_zad4a = "rozklad wieku nie jest rozkladem normalnym"
-if(testHC<=0.05) wynik_testHC_zad4a = "rozklad wieku nie jest rozkladem normalnym"
-if(testInfected<=0.05) wynik_testInfected_zad4a = "rozklad wieku nie jest rozkladem normalnym"
+wart_krytyczna_shapiro <- 0.905
+
+if(testAsthma<=wart_krytyczna_shapiro) wynik_testAsthma_zad4a = "rozklad wieku nie jest rozkladem normalnym"
+if(testCOPD<=wart_krytyczna_shapiro) wynik_testAsthma_zad4a = "rozklad wieku nie jest rozkladem normalnym"
+if(testHC<=wart_krytyczna_shapiro) wynik_testHC_zad4a = "rozklad wieku nie jest rozkladem normalnym"
+if(testInfected<=wart_krytyczna_shapiro) wynik_testInfected_zad4a = "rozklad wieku nie jest rozkladem normalnym"
 
 # b)
 hipotetycznyWiek <- 18
