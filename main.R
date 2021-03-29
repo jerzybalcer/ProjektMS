@@ -55,6 +55,18 @@ boxplot(dane_grupy$Asthma$Age, dane_grupy$COPD$Age,dane_grupy$HC$Age,dane_grupy$
 
 # ZAD 3
 
+daneInf <- dane_grupy$Infected$Real.part.Average[!is.na(dane_grupy$Infected$Real.part.Average)]
+daneAs <- dane_grupy$Asthma$Real.part.Average[!is.na(dane_grupy$Asthma$Real.part.Average)]
+
+# Sprawdzenie rozkladu normalnego
+shapiro_zad3_asthma <- shapiro.test(daneAs)$statistic
+shapiro_zad3_infected <- shapiro.test(daneInf)$statistic
+wart_kryt_shapiro_zad3 <- 0.842
+
+if(shapiro_zad3_asthma>wart_kryt_shapiro_zad3) print("probki asthma w zad3 maja rozklad normalny") # Probki w zbiorze Asthma maja rozklad normalny - test t-studenta
+if(shapiro_zad3_infected>wart_kryt_shapiro_zad3){ print("probki infected w zad3 maja rozklad normalny") # Probki w zbiorze Infected maja rozklad normalny - test u manna whitneya
+}else print("probki infected w zad3 nie maja rozkladu normalny")
+
 # Asthma
 length_bez_na_asthma <- length(dane_grupy$Asthma$Real.part.Average[!is.na(dane_grupy$Asthma$Real.part.Average)])
 wart_statystyki_testowej_asthma <- ((mean(dane_grupy$Asthma$Real.part.Average, na.rm = "true")-(-470))/(sd(dane_grupy$Asthma$Real.part.Average, na.rm = "true")/sqrt(length_bez_na_asthma)))
@@ -65,12 +77,11 @@ if(wart_statystyki_testowej_asthma<(0-kwantyl_rozkladu_asthma) || wart_statystyk
   wynik_testu_asthma_zad3 = "przecietna wartosc jest rozna od -470"
 
 # Infected
-length_bez_na_infected <- length(dane_grupy$Infected$Real.part.Average[!is.na(dane_grupy$Infected$Real.part.Average)])
-wart_statystyki_testowej_infected <- ((mean(dane_grupy$Infected$Real.part.Average, na.rm = "true")-(-470))/(sd(dane_grupy$Infected$Real.part.Average, na.rm = "true")/sqrt(length_bez_na_infected)))
-kwantyl_rozkladu_infected <- qnorm(0.975)
+# Test U Manna Whitneya dla próbek z grupy Infected
+testUMannWhitneyInf <- wilcox.test(daneInf, -470)
 wynik_testu_infected_zad3 <- "przecietna wartosc moze byc rowna -470 na danym poziomie istotnosci"
 
-if(wart_statystyki_testowej_infected<(0-kwantyl_rozkladu_infected) || wart_statystyki_testowej_infected>kwantyl_rozkladu_infected)
+if(testUMannWhitneyInf$p.value < 0.05)
   wynik_testu_infected_zad3 = "przecietna wartosc jest rozna od -470"
 
 # ZAD 4
@@ -149,6 +160,11 @@ tabelaPlec <- split(dane, dane$Gender)
 # Raz wylosowane probki, zapisane ponizej
 probkiK <- c(51 ,58 ,49 ,37 ,56 ,53 ,31, 39, 40, 25 ,53 ,51 ,22 ,48, 24, 76, 52, 17, 65, 40, 27, 72, 51, 56, 28)
 probkiM <- c(53, 80, 34, 69, 75, 66, 85, 57, 72, 47, 22, 28, 62, 68, 81, 46, 61, 29, 77, 36, 64, 29, 67, 81, 74)
+
+shapiroK <- shapiro.test(probkiK)$statistic
+shapiroM <- shapiro.test(probkiM)$statistic
+wart_kryt_shapiro_001_25 <- 0.888
+if(shapiroK > wart_kryt_shapiro_001_25 && shapiroM > wart_kryt_shapiro_001_25) # Oba zbiory probek maja rozklady normalne
 
 kobietyVsMezczyzni <- t.test(probkiK, probkiM, alternative = "less", conf.level = 0.01)
 
